@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../List/list.h
+cstdlib
+-
+
+/Users/lexolordan/CLionProjects/list/List/list.cpp
+list.h
+/Users/lexolordan/CLionProjects/list/List/list.h
+
+/Users/lexolordan/CLionProjects/list/List/list.h
+cstdlib
+-
+
+/Users/lexolordan/CLionProjects/list/main.cpp
+list.h
+/Users/lexolordan/CLionProjects/list/list.h
+iostream
+-
+

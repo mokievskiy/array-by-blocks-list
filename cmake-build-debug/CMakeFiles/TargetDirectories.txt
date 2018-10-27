@@ -1,0 +1,4 @@
+/Users/lexolordan/CLionProjects/list/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/lexolordan/CLionProjects/list/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lexolordan/CLionProjects/list/cmake-build-debug/CMakeFiles/test.dir
+/Users/lexolordan/CLionProjects/list/cmake-build-debug/CMakeFiles/main.dir

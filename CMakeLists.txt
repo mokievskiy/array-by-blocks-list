@@ -7,5 +7,5 @@ enable_testing()
 
 include_directories(List)
 
-set(SOURCE_LIB main.cpp List/list.cpp)
+set(SOURCE_LIB main.cpp)
 add_executable(main ${SOURCE_LIB})

@@ -134,33 +134,6 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-List/list.o: List/list.cpp.o
-
-.PHONY : List/list.o
-
-# target to build an object file
-List/list.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/List/list.cpp.o
-.PHONY : List/list.cpp.o
-
-List/list.i: List/list.cpp.i
-
-.PHONY : List/list.i
-
-# target to preprocess a source file
-List/list.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/List/list.cpp.i
-.PHONY : List/list.cpp.i
-
-List/list.s: List/list.cpp.s
-
-.PHONY : List/list.s
-
-# target to generate assembly for a file
-List/list.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/List/list.cpp.s
-.PHONY : List/list.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -198,9 +171,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... test"
 	@echo "... main"
-	@echo "... List/list.o"
-	@echo "... List/list.i"
-	@echo "... List/list.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

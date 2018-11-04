@@ -3,97 +3,159 @@
 
 #include <cstdlib>
 
-template<typename T>
+template<class T>
 class Block {
 private:
     T* _block;
     size_t _size;
-
+    size_t _ind;
+    
     Block<T> *prevs, *nexts;
 public:
-    Block(size_t size);
-
+    Block(size_t size, size_t ind);
+    ~Block();
+    
     T& getElement(size_t index);
     int getSize() const;
-
-    ~Block();
+    
+    template <class K> friend class List;
 };
 
-template<typename T>
+template<class T>
 class List {
 private:
     static const size_t BLOCK_SIZE;
-    Block<T>* _start;
+    Block<T> _start;
+    
+    void push (Block<T>* L, const T* x);
 public:
     List();
-    List(List &copy);
-
-    T& operator[](size_t index);
-
+    List(List &);
+    List(T *, size_t);
     ~List();
+    
+    size_t Len () const;
+    void PushAfter (Block<T>* L, size_t index);
+    
+    T& operator[](size_t index);
+    
+    template <class K> friend class Block;
 };
 
-template<typename T>
-Block<T>::Block(size_t size) : prevs(nullptr), nexts(nullptr) {
+///////////////////////////////////////
+
+template<class T>
+Block<T>::Block(size_t size, size_t ind) : prevs(NULL), nexts(NULL) {
     _size = size;
     _block = new T[size];
+    _ind = ind;
 }
 
-template<typename T>
+
+
+template<class T>
 T& Block<T>::getElement(size_t index) {
     return _block[index];
 }
 
-template<typename T>
+template<class T>
 int Block<T>::getSize() const {
     return _size;
 }
 
-template<typename T>
+template<class T>
 Block<T>::~Block() {
     delete[] _block;
 }
 
-template<typename T>
-T& List<T>::operator[](size_t index) {
-    int cur_pos = 0;
-    Block<T> *cur_block = _start;
+/////////////////////////////////////////
 
-    while (cur_block->nexts != nullptr && cur_pos + cur_block->getSize() <= index) {
-        cur_pos += cur_block->getSize();
+template<class T>
+T& List<T>::operator[](size_t index) {
+ 
+    Block<T> *cur_block = _start;
+    size_t pos = index % cur_block->getSize();
+    size_t in1 = index / cur_block->getSize();
+    
+    while (cur_block->nexts != NULL && cur_block._ind <= in1) {
         cur_block = cur_block->nexts;
     }
-
-    index -= cur_pos;
-    return cur_block->getElement(index);
+    
+    return cur_block->getElement(pos);
 }
 
-template<typename T>
-List<T>::List(List<T>& copy) {
-    Block<T>* nexts = copy._start;
-    _start = Block<T>(nexts);
+template<class T>
+size_t List<T>::Len () const {
+    Block<T> *tmp = _start.nexts;
+    size_t n = 0;
+    while (tmp != &_start) {
+        tmp = tmp->nexts;
+        n++;
+    }
+    return n;
+}
+
+template<class T>
+void List<T>::push (Block <T> *L, const T* x) {
+    Block<T> *R = L->nexts;
+    Block<T> *NEW = new Block<T>;
+    if (NEW == NULL) {throw "bad_alloc";}
+    NEW->_size = BLOCK_SIZE;
+    NEW->_block = x;
+    L->nexts = NEW;
+    NEW->prevs = L;
+    NEW->nexts = R;
+    R->prevs = NEW;
+    size_t t, l;
+    t = L->_ind;
+    L->_ind = t - 1;
+    NEW->_ind = t;
+    
+    l = Len();
+    for (size_t i = t+1; i < l; i++) {
+        R->_ind = i + 1;
+        R = R->nexts;
+    }
+    return;
+}
+//////
 
 
-    while (nexts->nexts) {
-        // реализовать копирование блоков
+//////
+
+
+template<class T>
+List<T>::List(List<T>& a) {
+    Block<T>* next = a._start;
+    _start = next;
+    
+    
+    while (next->nexts) {
+        //копирование блоков( не знаю как делать, думаю просто реализовать копирование списка через сверху написанный push)
     }
 }
 
-template<typename T>
-const size_t List<T>::BLOCK_SIZE = 500;
-
-template<typename T>
-List<T>::List() {
-    _start = new Block<T>(List<T>::BLOCK_SIZE);
+template<class T>
+List<T>::List(T *arr, size_t n) {
+    
 }
 
-template<typename T>
+template<class T>
+const size_t List<T>::BLOCK_SIZE = 5;
+
+template<class T>
+List<T>::List() {
+    _start.prevs = _start.nexts = &_start;
+    List<T>::BLOCK_SIZE;
+}
+
+template<class T>
 List<T>::~List() {
     Block<T>* nows = _start;
     while (nows != nullptr) {
         Block<T>* p = nows;
         nows = nows->nexts;
-
+        
         delete p;
     }
 }

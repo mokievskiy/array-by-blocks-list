@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/lexolordan/CLionProjects/list/List 
+CXX_INCLUDES = -I/Users/lexolordan/array-by-blocks-list/List 
 

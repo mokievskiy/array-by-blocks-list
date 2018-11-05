@@ -9,10 +9,12 @@
 ../List/list.h
 cstdlib
 -
+cassert
+-
 
-/Users/lexolordan/CLionProjects/list/main.cpp
+/Users/lexolordan/array-by-blocks-list/main.cpp
 list.h
-/Users/lexolordan/CLionProjects/list/list.h
+/Users/lexolordan/array-by-blocks-list/list.h
 iostream
 -
 

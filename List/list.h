@@ -16,7 +16,8 @@ public:
     ~Block();
     
     T& getElement(size_t index);
-    int getSize() const;
+    size_t getSize() const;
+    size_t getIndex() const;
     
     template <class K> friend class List;
 };
@@ -27,7 +28,6 @@ private:
     static const size_t BLOCK_SIZE;
     Block<T> _start;
     
-    void push (Block<T>* L, const T* x);
 public:
     List();
     List(List &);
@@ -35,7 +35,10 @@ public:
     ~List();
     
     size_t Len () const;
-    void PushAfter (Block<T>* L, size_t index);
+    void PushAfter (Block<T>* L, T* x);
+    void PushAfterI (size_t i, T* x);
+    void PushBegin (Block<T>* K);
+    void PushEnd (Block<T>* K);
     
     T& operator[](size_t index);
     
@@ -61,6 +64,11 @@ T& Block<T>::getElement(size_t index) {
 template<class T>
 int Block<T>::getSize() const {
     return _size;
+}
+
+template<class T>
+size_t Block<T>::getIndex() const {
+	return _ind;
 }
 
 template<class T>
@@ -96,7 +104,7 @@ size_t List<T>::Len () const {
 }
 
 template<class T>
-void List<T>::push (Block <T> *L, const T* x) {
+void List<T>::PushAfter (Block <T> *L, const T* x) {
     Block<T> *R = L->nexts;
     Block<T> *NEW = new Block<T>;
     if (NEW == NULL) {throw "bad_alloc";}
@@ -120,6 +128,27 @@ void List<T>::push (Block <T> *L, const T* x) {
 }
 //////
 
+template <class T>
+void List<T>::PushAfterI (size_t i, const T* x) {
+	Block<T>* tmp;
+	tmp = _start->nexts;
+	while (tmp->_ind != i) {
+		tmp = tmp->nexts;
+	}
+	PushAfter(tmp, x);
+	return;
+}
+
+//////
+template<class T>
+void List<T>:: PushEnd(const T* x) {
+	PushAfter(_start.prevs, x);
+}
+
+template<class T>
+void List<T>:: PushBegin(const t* x) {
+	PushAfter(&_start, x);
+}
 
 //////
 
@@ -131,7 +160,7 @@ List<T>::List(List<T>& a) {
     
     
     while (next->nexts) {
-        //копирование блоков( не знаю как делать, думаю просто реализовать копирование списка через сверху написанный push)
+        //??????????? ??????( ?? ???? ??? ??????, ????? ?????? ??????????? ??????????? ?????? ????? ?????? ?????????? push)
     }
 }
 
